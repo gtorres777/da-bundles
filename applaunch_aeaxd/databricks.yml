@@ -1,7 +1,7 @@
 # This is a Databricks asset bundle definition for dab_project.
 # See https://docs.databricks.com/dev-tools/bundles/index.html for documentation.
 bundle:
-  name: dab_project
+  name: applaunch_Pipeline_BUNDLE
 
 include:
   - resources/*.yml
