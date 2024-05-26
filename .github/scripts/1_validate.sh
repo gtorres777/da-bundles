@@ -2,6 +2,8 @@
 
 set -e
 
+shopt -s extglob
+
 BRANCH="${GITHUB_REF#refs/heads/}"
 
 if [ "$BRANCH" = "main" ] || [ "$BRANCH" = "master" ]; then
