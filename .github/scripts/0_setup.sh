@@ -2,9 +2,6 @@
 
 set -e
 
-sudo apt update
-sudo apt install shopt
-
 # Remove Databricks CLI if present
 DATABRICKS_BINARY='/usr/local/bin/databricks'
 if [ -f "$DATABRICKS_BINARY" ]; then
