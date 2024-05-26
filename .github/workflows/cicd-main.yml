@@ -20,7 +20,7 @@ jobs:
          uses: actions/checkout@v2
        - name: Setup
          run: sh ./.github/scripts/0_setup.sh
-       # - name: Databricks Bundle Validate
-       #   # run: sh ./.github/scripts/1_validate.sh
+       - name: Databricks Bundle Validate
+         run: sh ./.github/scripts/1_validate.sh
        # - name: Databricks Bundle Deploy
          # run: sh ./.github/scripts/2_deploy.sh
