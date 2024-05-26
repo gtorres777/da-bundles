@@ -8,7 +8,7 @@ include:
 
 targets:
   # The 'dev' target, for development purposes. This target is the default.
-  # dev:
+  DEV:
   #   # We use 'mode: development' to indicate this is a personal development copy:
   #   # - Deployed resources get prefixed with '[dev my_user_name]'
   #   # - Any job schedules and triggers are paused by default
@@ -17,6 +17,33 @@ targets:
   #   default: true
   #   workspace:
   #     host: https://dbc-de53f604-07cf.cloud.databricks.com
+  #
+    workspace:
+      host: https://dbc-de53f604-07cf.cloud.databricks.com
+      # We only have a single deployment copy for production, so we use a shared path.
+      auth_type: pat
+      root_path: /Users/${workspace.current_user.userName}/asset_bundles/${bundle.name}/${bundle.target}
+      # root_path: /Shared/.bundle/prod/${bundle.name}
+      artifact_path: /Users/${workspace.current_user.userName}/asset_bundles/${bundle.name}/${bundle.target}/artifacts
+      file_path: /Users/${workspace.current_user.userName}/asset_bundles/${bundle.name}/${bundle.target}/files
+      state_path: /Users/${workspace.current_user.userName}/asset_bundles/${bundle.name}/${bundle.target}/state
+
+    resources:
+      jobs:
+        applaunch_Pipeline-job:
+          run_as:
+            # This runs as kozaktux@gmail.com in production. We could also use a service principal here
+            # using service_principal_name (see https://docs.databricks.com/dev-tools/bundles/permissions.html).
+            user_name: kozaktux@gmail.com
+          # email_notifications:
+          #   on_failure:
+          #     - kozaktux@gmail.com
+          git_source:
+            git_url: https://github.com/gtorres777/snote
+            git_provider: github
+            git_branch: dev
+          tags:
+            job: DEV
 
   ## Optionally, there could be a 'staging' target here.
   ## (See Databricks docs on CI/CD at https://docs.databricks.com/dev-tools/bundles/index.html.)
@@ -42,7 +69,7 @@ targets:
       state_path: /Users/${workspace.current_user.userName}/asset_bundles/${bundle.name}/${bundle.target}/state
     resources:
       jobs:
-        applaunch_Pipeline_PROD-job:
+        applaunch_Pipeline-job:
           run_as:
             # This runs as kozaktux@gmail.com in production. We could also use a service principal here
             # using service_principal_name (see https://docs.databricks.com/dev-tools/bundles/permissions.html).

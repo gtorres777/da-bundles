@@ -1,8 +1,8 @@
 # The main job for dab_project.
 resources:
   jobs:
-    applaunch_Pipeline_PROD-job:
-      name: applaunch_Pipeline_PROD_DAB
+    applaunch_Pipeline-job:
+      name: applaunch_Pipeline_DAB
 
       # schedule:
       #   # Run every day at 8:37 AM
