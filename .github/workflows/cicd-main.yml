@@ -18,6 +18,8 @@ jobs:
      steps:
        - name: Checkout
          uses: actions/checkout@v2
+       - name: Set up Bash
+         run: sudo apt-get install -y bash
        - name: Setup
          run: sh ./.github/scripts/0_setup.sh
        - name: Databricks Bundle Validate
