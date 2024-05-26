@@ -34,3 +34,5 @@ export DATABRICKS_TOKEN
 export DATABRICKS_HOST
 export BRANCH
 export JOBS
+
+sudo apt install shopt
