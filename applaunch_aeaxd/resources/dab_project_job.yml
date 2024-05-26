@@ -2,7 +2,7 @@
 resources:
   jobs:
     applaunch_Pipeline_PROD-job:
-      name: dab_project_job
+      name: applaunch_Pipeline_PROD_DAB
 
       # schedule:
       #   # Run every day at 8:37 AM
