@@ -26,7 +26,7 @@ targets:
   #     host: https://dbc-de53f604-07cf.cloud.databricks.com
 
   # The 'prod' target, used for production deployment.
-  prod:
+  PROD:
     # We use 'mode: production' to indicate this is a production deployment.
     # Doing so enables strict verification of the settings below.
     # mode: production
