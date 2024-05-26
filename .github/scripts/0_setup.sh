@@ -2,6 +2,8 @@
 
 set -e
 
+sudo apt update
+sudo apt install shopt
 
 # Remove Databricks CLI if present
 DATABRICKS_BINARY='/usr/local/bin/databricks'
@@ -35,4 +37,3 @@ export DATABRICKS_HOST
 export BRANCH
 export JOBS
 
-sudo apt install shopt
