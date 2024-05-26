@@ -1,0 +1,26 @@
+name: CICD Pipeline DAB PROD Job 
+
+concurrency: 1
+
+on:
+  push:
+    branches:
+      - 'main'
+
+env:
+  DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+  DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+
+jobs:
+   VALIDATE_DEPLOY:
+     name: Validate and Deploy PROD
+     runs-on: ubuntu-latest
+     steps:
+       - name: Checkout
+         uses: actions/checkout@v2
+       - name: Setup
+         run: sh ./.github/scripts/0_setup.sh
+       - name: Databricks Bundle Validate
+         # run: sh ./.github/scripts/1_validate.sh
+       - name: Databricks Bundle Deploy
+         # run: sh ./.github/scripts/2_deploy.sh
