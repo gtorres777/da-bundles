@@ -21,10 +21,8 @@ jobs:
        - name: Set up Bash
          run: sudo apt-get install -y bash
        - name: Setup
-         shell: bash
          run: bash ./.github/scripts/0_setup.sh
        - name: Databricks Bundle Validate
-         shell: bash
          run: bash ./.github/scripts/1_validate.sh
-       # - name: Databricks Bundle Deploy
-         # run: sh ./.github/scripts/2_deploy.sh
+       - name: Databricks Bundle Deploy
+         run: bash ./.github/scripts/2_deploy.sh
