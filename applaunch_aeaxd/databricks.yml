@@ -6,6 +6,12 @@ bundle:
 include:
   - resources/*.yml
 
+
+variables:
+  NODE_TYPE_ID:
+  min_workers:
+  max_workers:
+
 targets:
   # The 'dev' target, for development purposes. This target is the default.
   DEV:
