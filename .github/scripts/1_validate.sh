@@ -28,6 +28,8 @@ for dir in $JOBS; do
     cd $dir
     echo "Job: $dir Validation"
     ls -a $GITHUB_WORKSPACE
+
+    echo $GITHUB_WORKSPACE
     ./set_env.sh $TARGET_ENV $dir
     databricks bundle validate -t "$DATABRICKS_BUNDLE_ENV"
     echo ""
