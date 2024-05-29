@@ -2,7 +2,8 @@
 
 TARGET_ENV=$1
 BUNDLE_PATH=$2
-CONFIG_FILE="${BUNDLE_PATH}/config/${TARGET_ENV}.yml"
+
+CONFIG_FILE="${GITHUB_WORKSPACE}/${BUNDLE_PATH}/config/${TARGET_ENV}.yml"
 
 if [ -f "$CONFIG_FILE" ]; then
   echo "Loading configuration from $CONFIG_FILE"
