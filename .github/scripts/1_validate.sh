@@ -31,6 +31,7 @@ for dir in $JOBS; do
 
     # echo $GITHUB_WORKSPACE
 
+    ls $dir
     ${GITHUB_WORKSPACE}/.github/scripts/set_env.sh $TARGET_ENV $dir
     databricks bundle validate -t "$DATABRICKS_BUNDLE_ENV"
     echo ""
