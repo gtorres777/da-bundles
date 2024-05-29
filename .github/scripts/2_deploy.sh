@@ -26,8 +26,8 @@ for dir in $JOBS; do
     fi
     cd $dir
     echo "Job: $dir Deployment"
-    printenv
-    # databricks bundle deploy -t "$DATABRICKS_BUNDLE_ENV"
+    ${GITHUB_WORKSPACE}/.github/scripts/set_env.sh $TARGET_ENV $dir
+    databricks bundle deploy -t "$DATABRICKS_BUNDLE_ENV"
     echo ""
     cd ..
 done
