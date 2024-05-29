@@ -1,7 +1,5 @@
 name: CICD Pipeline DAB PROD Job 
 
-concurrency: 1
-
 on:
   push:
     branches:
@@ -11,6 +9,7 @@ on:
 env:
   DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
   DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+  TARGET_ENV: ${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }}
 
 jobs:
    VALIDATE_DEPLOY:
