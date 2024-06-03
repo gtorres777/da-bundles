@@ -51,3 +51,7 @@ resources:
             spark_env_vars:
               S3_PATH: ${var.S3_PATH}
               DB_URL: ${var.DB_URL}
+              OPERATION_MODE: ${var.OPERATION_MODE}
+              DB_SECRETS_SCOPE: ${var.DB_SECRETS_SCOPE}
+              S3_READ_PREFIX: ${var.S3_READ_PREFIX}
+              S3_WRITE_PREFIX: ${var.S3_WRITE_PREFIX}

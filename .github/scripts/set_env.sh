@@ -3,7 +3,7 @@
 TARGET_ENV=$1
 BUNDLE_PATH=$2
 
-CONFIG_FILE="${GITHUB_WORKSPACE}/${BUNDLE_PATH}/config/${TARGET_ENV}.yml"
+CONFIG_FILE="${GITHUB_WORKSPACE}/${BUNDLE_PATH}/configs/${TARGET_ENV}.yml"
 
 if [ -f "$CONFIG_FILE" ]; then
   echo "Loading configuration from $CONFIG_FILE"
@@ -30,5 +30,4 @@ if [ -f "$CONFIG_FILE" ]; then
   echo "Configuration loaded successfully."
 else
   echo "Configuration file $CONFIG_FILE does not exist"
-  exit 1
 fi
