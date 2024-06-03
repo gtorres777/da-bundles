@@ -11,6 +11,8 @@ variables:
   NODE_TYPE_ID:
   min_workers:
   max_workers:
+  S3_PATH:
+  DB_URL:
 
 targets:
   # The 'dev' target, for development purposes. This target is the default.
