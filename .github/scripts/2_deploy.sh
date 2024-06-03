@@ -24,7 +24,17 @@ for dir in $JOBS; do
         echo ""
         continue
     fi
+
     cd $dir
+
+    # Check if the target is configured in the databricks.yml file
+    if ! grep -q "$DATABRICKS_BUNDLE_ENV:" databricks.yml; then
+        echo "Target $DATABRICKS_BUNDLE_ENV not configured for $dir. Skipping."
+        echo ""
+        cd ..
+        continue
+    fi
+
     echo "Job: $dir Deployment"
     source ${GITHUB_WORKSPACE}/.github/scripts/set_env.sh $TARGET_ENV $dir
     databricks bundle deploy -t "$DATABRICKS_BUNDLE_ENV"
