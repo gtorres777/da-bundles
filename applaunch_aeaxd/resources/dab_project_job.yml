@@ -19,16 +19,12 @@ resources:
           notebook_task:
             notebook_path: test/getemail
             source: GIT
-          spark_env_vars:
-            S3_PATH: ${var.S3_PATH}
 
         - task_key: notebook_task_hi
           job_cluster_key: job_cluster
           notebook_task:
             notebook_path: test/gethi
             source: GIT
-          spark_env_vars:
-            DB_URL: ${var.DB_URL}
         
       job_clusters:
         - job_cluster_key: job_cluster
@@ -52,3 +48,6 @@ resources:
             autoscale:
                 min_workers: ${var.min_workers}
                 max_workers: ${var.max_workers}
+            spark_env_vars:
+              S3_PATH: ${var.S3_PATH}
+              DB_URL: ${var.DB_URL}
