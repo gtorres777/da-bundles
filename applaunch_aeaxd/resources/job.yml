@@ -1,0 +1,57 @@
+# The main job for dab_project.
+resources:
+  jobs:
+    applaunch_Pipeline-job:
+      name: applaunch_Pipeline_DAB
+
+      # schedule:
+      #   # Run every day at 8:37 AM
+      #   quartz_cron_expression: '44 37 8 * * ?'
+      #   timezone_id: Europe/Amsterdam
+
+      # email_notifications:
+      #   on_failure:
+      #     - kozaktux@gmail.com
+
+      tasks:
+        - task_key: notebook_task_email
+          job_cluster_key: job_cluster
+          notebook_task:
+            notebook_path: test/getemail
+            source: GIT
+
+        - task_key: notebook_task_hi
+          job_cluster_key: job_cluster
+          notebook_task:
+            notebook_path: test/gethi
+            source: GIT
+        
+      job_clusters:
+        - job_cluster_key: job_cluster
+          new_cluster:
+            aws_attributes:
+              "ebs_volume_type": "GENERAL_PURPOSE_SSD"
+              "ebs_volume_count": 1
+              "ebs_volume_size": 32
+            custom_tags:
+              bamazon:team: eds_data_science
+              bamazon:app: engds
+              bamazon:env: ${bundle.target}
+
+            # cluster_log_conf:
+            #   s3:
+            #     destination: s3://dbxoverwatch-databricks-cluster-logs-${bundle.target}/logs
+            #     region: us-east-1
+            spark_version: 13.3.x-scala2.12
+            # node_type_id: m4.large
+            node_type_id: ${var.NODE_TYPE_ID}
+            autoscale:
+                min_workers: ${var.min_workers}
+                max_workers: ${var.max_workers}
+            spark_env_vars:
+              S3_PATH: ${var.S3_PATH}
+              DB_URL: ${var.DB_URL}
+              OPERATION_MODE: ${var.OPERATION_MODE}
+              DB_SECRETS_SCOPE: ${var.DB_SECRETS_SCOPE}
+              S3_READ_PREFIX: ${var.S3_READ_PREFIX}
+              S3_WRITE_PREFIX: ${var.S3_WRITE_PREFIX}
