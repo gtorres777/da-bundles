@@ -11,13 +11,13 @@ resources:
 
       tasks:
         - task_key: notebook_task_email
-          job_cluster_key: job_cluster
+          job_cluster_key: job_cluster_${bundle.target}
           notebook_task:
             notebook_path: test/getemail
             source: GIT
 
       job_clusters:
-        - job_cluster_key: job_cluster
+        - job_cluster_key: job_cluster_${bundle.target}
           new_cluster:
             aws_attributes:
               "ebs_volume_type": "GENERAL_PURPOSE_SSD"
