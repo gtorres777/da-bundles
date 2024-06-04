@@ -16,6 +16,7 @@ elif [ "$BRANCH" = "dev" ]; then
 else
     source .github/scripts/check_diff.sh
     JOBS="${CHANGE_DIR_ARRAY[@]}"
+    DATABRICKS_BUNDLE_ENV="DEV"
 fi
 
 
