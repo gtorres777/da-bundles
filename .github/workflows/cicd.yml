@@ -1,0 +1,27 @@
+name: CICD Pipeline DAB test Job 
+
+on:
+  push:
+    branches:
+      - '**'
+      - '!main'
+      - '!dev'
+
+env:
+  DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+  DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+  TARGET_ENV: ${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }}
+
+jobs:
+   VALIDATE_DEPLOY:
+     name: Validate and Deploy PROD
+     runs-on: ubuntu-latest
+     steps:
+       - name: Checkout
+         uses: actions/checkout@v2
+       - name: Set up Bash
+         run: sudo apt-get install -y bash
+       - name: Setup
+         run: bash ./.github/scripts/0_setup.sh
+       - name: Databricks Bundle Validate
+         run: bash ./.github/scripts/1_validate.sh

@@ -9,6 +9,9 @@ BRANCH="${GITHUB_REF#refs/heads/}"
 if [ "$BRANCH" = "main" ] || [ "$BRANCH" = "master" ]; then
     JOBS="*"
     DATABRICKS_BUNDLE_ENV="PROD"
+elif [ "$BRANCH" = "dev" ]; then
+    JOBS="*"
+    DATABRICKS_BUNDLE_ENV="DEV"
 else
     source .github/scripts/check_diff.sh
     JOBS="${CHANGE_DIR_ARRAY[@]}"
