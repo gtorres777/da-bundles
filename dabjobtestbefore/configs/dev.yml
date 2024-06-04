@@ -1,0 +1,9 @@
+NODE_TYPE_ID=m4.large
+min_workers=1
+max_workers=2
+S3_PATH=s3://dev-bucket/data
+DB_URL=jdbc:mysql://dev-db-host:3306/db
+OPERATION_MODE=dev
+DB_SECRETS_SCOPE=aws ssm getparameter dev xd
+S3_READ_PREFIX=reads3 dev
+S3_WRITE_PREFIX=writes3 dev

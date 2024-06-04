@@ -17,7 +17,7 @@ resources:
             source: GIT
 
       job_clusters:
-        - job_cluster_key: job_cluster
+        - job_cluster_key: job_cluster_${bundle.target}
           new_cluster:
             aws_attributes:
               "ebs_volume_type": "GENERAL_PURPOSE_SSD"
