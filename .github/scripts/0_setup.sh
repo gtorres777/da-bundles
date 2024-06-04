@@ -19,7 +19,7 @@ databricks -v
 # Get Branch
 BRANCH="${GITHUB_REF#refs/heads/}"
 
-if [ "$BRANCH" = "main" ] || [ "$BRANCH" = "master" ]; then
+if [ "$BRANCH" = "main" ] || [ "$BRANCH" = "master" ] || [ "$BRANCH" = "dev" ]; then
     JOBS="*"
 else
     source .github/scripts/check_diff.sh

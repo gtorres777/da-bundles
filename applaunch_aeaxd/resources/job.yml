@@ -11,7 +11,6 @@ resources:
 
       # email_notifications:
       #   on_failure:
-      #     - kozaktux@gmail.com
 
       tasks:
         - task_key: notebook_task_email

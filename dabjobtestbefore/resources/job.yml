@@ -9,10 +9,6 @@ resources:
       #   quartz_cron_expression: '44 37 8 * * ?'
       #   timezone_id: Europe/Amsterdam
 
-      # email_notifications:
-      #   on_failure:
-      #     - kozaktux@gmail.com
-
       tasks:
         - task_key: notebook_task_email
           job_cluster_key: job_cluster
@@ -42,3 +38,4 @@ resources:
             autoscale:
                 min_workers: 1
                 max_workers: 2
+
