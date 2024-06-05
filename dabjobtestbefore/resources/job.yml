@@ -30,7 +30,7 @@ resources:
               "ebs_volume_count": 3
               "ebs_volume_size": 100
             node_type_id: ${var.NODE_TYPE_ID_APP_LAUNCH_FEATURE_ENGINEERING_CLUSTER}
-            driver_node_type_id: {var.DRIVER_NODE_TYPE_ID_APP_LAUNCH_FEATURE_ENGINEERING_CLUSTER}
+            driver_node_type_id: ${var.DRIVER_NODE_TYPE_ID_APP_LAUNCH_FEATURE_ENGINEERING_CLUSTER}
             custom_tags:
               "bamazon:team": "eds_data_science"
               "bamazon:app": "engds"
@@ -71,7 +71,7 @@ resources:
               "ebs_volume_count": 3
               "ebs_volume_size": 100
             node_type_id: ${var.NODE_TYPE_ID_AGG_ML_EMAIL_METRICS_CLUSTER}
-            driver_node_type_id: {var.DRIVER_NODE_TYPE_ID_AGG_ML_EMAIL_METRICS_CLUSTER}
+            driver_node_type_id: ${var.DRIVER_NODE_TYPE_ID_AGG_ML_EMAIL_METRICS_CLUSTER}
             custom_tags:
               "bamazon:team": "eds_data_science"
               "bamazon:app": "engds"
@@ -112,7 +112,7 @@ resources:
               "ebs_volume_count": 3
               "ebs_volume_size": 100
             node_type_id: ${var.NODE_TYPE_ID_APP_LAUNCH_MONETA_VALIDATION_CLUSTER}
-            driver_node_type_id: {var.DRIVER_NODE_TYPE_ID_APP_LAUNCH_MONETA_VALIDATION_CLUSTER}
+            driver_node_type_id: ${var.DRIVER_NODE_TYPE_ID_APP_LAUNCH_MONETA_VALIDATION_CLUSTER}
             custom_tags:
               "bamazon:team": "eds_data_science"
               "bamazon:app": "engds"
@@ -153,7 +153,7 @@ resources:
               "ebs_volume_count": 1
               "ebs_volume_size": 100
             node_type_id: ${var.NODE_TYPE_ID_APP_LAUNCH_DLQ_VALIDATION_CLUSTER}
-            driver_node_type_id: {var.DRIVER_NODE_TYPE_ID_APP_LAUNCH_DLQ_VALIDATION_CLUSTER}
+            driver_node_type_id: ${var.DRIVER_NODE_TYPE_ID_APP_LAUNCH_DLQ_VALIDATION_CLUSTER}
             custom_tags:
               "bamazon:team": "eds_data_science"
               "bamazon:app": "engds"
@@ -194,7 +194,7 @@ resources:
               "ebs_volume_count": 1
               "ebs_volume_size": 100
             node_type_id: ${var.NODE_TYPE_ID_APP_LAUNCH_PREDICTION_PIPELINE_CLUSTER}
-            driver_node_type_id: {var.DRIVER_NODE_TYPE_ID_APP_LAUNCH_PREDICTION_PIPELINE_CLUSTER}
+            driver_node_type_id: ${var.DRIVER_NODE_TYPE_ID_APP_LAUNCH_PREDICTION_PIPELINE_CLUSTER}
             custom_tags:
               "bamazon:team": "eds_data_science"
               "bamazon:app": "engds"
