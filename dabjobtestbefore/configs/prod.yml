@@ -1,4 +1,5 @@
 NODE_TYPE_ID=m4.large
+DRIVER_NODE_TYPE_ID=m4.large
 min_workers=5
 max_workers=6
 S3_PATH=s3://prod-bucket/data
