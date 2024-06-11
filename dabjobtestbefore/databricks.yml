@@ -9,25 +9,16 @@ include:
 
 variables:
   NODE_TYPE_ID:
-  min_workers:
-  max_workers:
-  S3_PATH:
-    description: S3 bucket name for dev or prod engds
-
-  DB_URL:
-    description: MySQL database name for dev or prod
-
-  OPERATION_MODE:
-    description: Used to distinguish between dev and prod, to enable test/debugging messaging and prevent emails and other messaging from being sent
-
-  DB_SECRETS_SCOPE:
-    description: Used to get secret to connect to MySQL database
-
-  S3_READ_PREFIX:
-    description: Used by scripts to identify where the delta/parquet files should be read from
-
-  S3_WRITE_PREFIX:
-    description: Used by scripts to identify where the delta/parquet files should be written from
+  NODE_TYPE_ID_APP_LAUNCH_FEATURE_ENGINEERING_CLUSTER:
+  DRIVER_NODE_TYPE_ID_APP_LAUNCH_FEATURE_ENGINEERING_CLUSTER:
+  NODE_TYPE_ID_AGG_ML_EMAIL_METRICS_CLUSTER:
+  DRIVER_NODE_TYPE_ID_AGG_ML_EMAIL_METRICS_CLUSTER:
+  NODE_TYPE_ID_APP_LAUNCH_MONETA_VALIDATION_CLUSTER:
+  DRIVER_NODE_TYPE_ID_APP_LAUNCH_MONETA_VALIDATION_CLUSTER:
+  NODE_TYPE_ID_APP_LAUNCH_DLQ_VALIDATION_CLUSTER:
+  DRIVER_NODE_TYPE_ID_APP_LAUNCH_DLQ_VALIDATION_CLUSTER:
+  NODE_TYPE_ID_APP_LAUNCH_PREDICTION_PIPELINE_CLUSTER:
+  DRIVER_NODE_TYPE_ID_APP_LAUNCH_PREDICTION_PIPELINE_CLUSTER:
 
 targets:
   DEV:
@@ -97,4 +88,3 @@ targets:
             git_branch: master
           tags:
             job: PROD
-    

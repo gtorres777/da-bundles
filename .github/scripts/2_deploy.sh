@@ -7,24 +7,30 @@ shopt -s extglob
 BRANCH="${GITHUB_REF#refs/heads/}"
 
 if [ "$BRANCH" = "main" ] || [ "$BRANCH" = "master" ]; then
-    JOBS="*"
+    JOBS=(*)
     DATABRICKS_BUNDLE_ENV="PROD"
 elif [ "$BRANCH" = "dev" ]; then
-    JOBS="*"
+    JOBS=(*)
     DATABRICKS_BUNDLE_ENV="DEV"
 else
     source .github/scripts/check_diff.sh
-    JOBS="${CHANGE_DIR_ARRAY[@]}"
+    JOBS=("${CHANGE_DIR_ARRAY[@]}")
     DATABRICKS_BUNDLE_ENV="DEV"
 fi
 
 echo "Databricks Bundle Deploy"
 echo ""
 
-for dir in $JOBS; do
+# for dir in $JOBS; do
+for dir in "${JOBS[@]}"; do
     if [[ "$dir" == @(.github|Terraform|DAB) ]]; then
         echo "Skip: $dir"
         echo ""
+        continue
+    fi
+
+    if [ ! -d "$dir" ]; then
+        echo "Directory $dir does not exist. Skipping..." && echo ""
         continue
     fi
 
