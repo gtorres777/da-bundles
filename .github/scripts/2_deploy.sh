@@ -7,10 +7,10 @@ shopt -s extglob
 BRANCH="${GITHUB_REF#refs/heads/}"
 
 if [ "$BRANCH" = "main" ] || [ "$BRANCH" = "master" ]; then
-    JOBS=("*")
+    JOBS=(*)
     DATABRICKS_BUNDLE_ENV="PROD"
 elif [ "$BRANCH" = "dev" ]; then
-    JOBS=("*")
+    JOBS=(*)
     DATABRICKS_BUNDLE_ENV="DEV"
 else
     source .github/scripts/check_diff.sh

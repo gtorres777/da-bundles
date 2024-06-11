@@ -87,5 +87,3 @@ targets:
             git_branch: master
           tags:
             job: PROD
-    
-
