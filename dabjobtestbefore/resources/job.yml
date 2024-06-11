@@ -17,7 +17,7 @@ resources:
             source: GIT
 
         - task_key: notebook_task_hello
-          job_cluster_key: job_cluster_${bundle.target}
+          job_cluster_key: Agg_ML_Email_Metrics_cluster_${bundle.target}
           notebook_task:
             notebook_path: test/gethi
             source: GIT
