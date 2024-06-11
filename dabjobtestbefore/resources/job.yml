@@ -9,386 +9,62 @@ resources:
       #   quartz_cron_expression: '44 37 8 * * ?'
       #   timezone_id: Europe/Amsterdam
 
+      tasks:
+        - task_key: notebook_task_email
+          job_cluster_key: App_Launch_Feature_Engineering_cluster_${bundle.target}
+          notebook_task:
+            notebook_path: test/getemail
+            source: GIT
+
+        - task_key: notebook_task_hello
+          job_cluster_key: Agg_ML_Email_Metrics_cluster_${bundle.target}
+          notebook_task:
+            notebook_path: test/gethi
+            source: GIT
+
       job_clusters:
         - job_cluster_key: App_Launch_Feature_Engineering_cluster_${bundle.target}
           new_cluster:
-            spark_version: 12.2.x-scala2.12
-            spark_conf:
-              "spark.hadoop.fs.s3a.canned.acl": "BucketOwnerFullControl"
-              "spark.hadoop.fs.s3a.stsAssumeRole.arn": "arn:aws:iam::141988508569:role/bamazon-teamengds"
-              "spark.databricks.hive.metastore.glueCatalog.enabled": "true"
-              "hive.metastore.glue.catalogid": "141988508569"
-              "spark.hadoop.fs.s3a.credentialsType": "AssumeRole"
-              "spark.hadoop.fs.s3a.acl.default": "BucketOwnerFullControl"
             aws_attributes:
-              "first_on_demand": 1
-              "availability": "SPOT_WITH_FALLBACK"
-              "zone_id": "auto"
-              "instance_profile_arn": "arn:aws:iam::199554792156:instance-profile/dataeng-eds_data_science-prod-profile"
-              "spot_bid_price_percent": 100
               "ebs_volume_type": "GENERAL_PURPOSE_SSD"
-              "ebs_volume_count": 3
-              "ebs_volume_size": 100
-            node_type_id: ${var.NODE_TYPE_ID_APP_LAUNCH_FEATURE_ENGINEERING_CLUSTER}
-            driver_node_type_id: ${var.DRIVER_NODE_TYPE_ID_APP_LAUNCH_FEATURE_ENGINEERING_CLUSTER}
+              "ebs_volume_count": 1
+              "ebs_volume_size": 32
             custom_tags:
-              "bamazon:team": "eds_data_science"
-              "bamazon:app": "engds"
-              "bamazon:env": "prod"
-            cluster_log_conf:
-              s3:
-                destination: s3://dbxoverwatch-databricks-cluster-logs-prod/logs
-                region: us-east-1
-                enable_encryption: true
-                canned_acl: bucket-owner-full-control
-            spark_env_vars:
-              "PYSPARK_PYTHON": "/databricks/python3/bin/python3"
-            enable_elastic_disk: false
-            policy_id: 9C60384B6B001C48
-            data_security_mode: NONE
-            runtime_engine: STANDARD
+              bamazon:team: eds_data_science
+              bamazon:app: engds
+              bamazon:env: prod
+
+            # cluster_log_conf:
+            #   s3:
+            #     destination: s3://dbxoverwatch-databricks-cluster-logs-${bundle.target}/logs
+            #     region: us-east-1
+            spark_version: 13.3.x-scala2.12
+            # node_type_id: m4.large
+            node_type_id: ${var.NODE_TYPE_ID}
+            driver_node_type_id: ${var.DRIVER_NODE_TYPE_ID_APP_LAUNCH_FEATURE_ENGINEERING_CLUSTER}
             autoscale:
-              min_workers: 20
-              max_workers: 30
+                min_workers: 1
+                max_workers: 2
 
         - job_cluster_key: Agg_ML_Email_Metrics_cluster_${bundle.target}
           new_cluster:
-            spark_version: 12.2.x-scala2.12
-            spark_conf:
-              "spark.hadoop.fs.s3a.canned.acl": "BucketOwnerFullControl"
-              "spark.hadoop.fs.s3a.stsAssumeRole.arn": "arn:aws:iam::141988508569:role/bamazon-teamengds"
-              "spark.databricks.hive.metastore.glueCatalog.enabled": "true"
-              "hive.metastore.glue.catalogid": "141988508569"
-              "spark.hadoop.fs.s3a.credentialsType": "AssumeRole"
-              "spark.hadoop.fs.s3a.acl.default": "BucketOwnerFullControl"
             aws_attributes:
-              "first_on_demand": 1
-              "availability": "SPOT_WITH_FALLBACK"
-              "zone_id": "auto"
-              "instance_profile_arn": "arn:aws:iam::199554792156:instance-profile/dataeng-eds_data_science-prod-profile"
-              "spot_bid_price_percent": 100
               "ebs_volume_type": "GENERAL_PURPOSE_SSD"
-              "ebs_volume_count": 3
-              "ebs_volume_size": 100
-            node_type_id: ${var.NODE_TYPE_ID_AGG_ML_EMAIL_METRICS_CLUSTER}
+              "ebs_volume_count": 1
+              "ebs_volume_size": 32
+            custom_tags:
+              bamazon:team: eds_data_science
+              bamazon:app: engds
+              bamazon:env: prod
+
+            # cluster_log_conf:
+            #   s3:
+            #     destination: s3://dbxoverwatch-databricks-cluster-logs-${bundle.target}/logs
+            #     region: us-east-1
+            spark_version: 13.3.x-scala2.12
+            # node_type_id: m4.large
+            node_type_id: ${var.NODE_TYPE_ID}
             driver_node_type_id: ${var.DRIVER_NODE_TYPE_ID_AGG_ML_EMAIL_METRICS_CLUSTER}
-            custom_tags:
-              "bamazon:team": "eds_data_science"
-              "bamazon:app": "engds"
-              "bamazon:env": "prod"
-            cluster_log_conf:
-              s3:
-                destination: s3://dbxoverwatch-databricks-cluster-logs-prod/logs
-                region: us-east-1
-                enable_encryption: true
-                canned_acl: bucket-owner-full-control
-            spark_env_vars:
-              "PYSPARK_PYTHON": "/databricks/python3/bin/python3"
-            enable_elastic_disk: false
-            policy_id: 9C60384B6B001C48
-            data_security_mode: NONE
-            runtime_engine: STANDARD
             autoscale:
-              min_workers: 20
-              max_workers: 30
-
-        - job_cluster_key: App_Launch_Moneta_Validation_cluster_${bundle.target}
-          new_cluster:
-            spark_version: 12.2.x-scala2.12
-            spark_conf:
-              "spark.hadoop.fs.s3a.canned.acl": "BucketOwnerFullControl"
-              "spark.hadoop.fs.s3a.stsAssumeRole.arn": "arn:aws:iam::141988508569:role/bamazon-teamengds"
-              "spark.databricks.hive.metastore.glueCatalog.enabled": "true"
-              "hive.metastore.glue.catalogid": "141988508569"
-              "spark.hadoop.fs.s3a.credentialsType": "AssumeRole"
-              "spark.hadoop.fs.s3a.acl.default": "BucketOwnerFullControl"
-            aws_attributes:
-              "first_on_demand": 1
-              "availability": "SPOT_WITH_FALLBACK"
-              "zone_id": "auto"
-              "instance_profile_arn": "arn:aws:iam::199554792156:instance-profile/dataeng-eds_data_science-prod-profile"
-              "spot_bid_price_percent": 100
-              "ebs_volume_type": "GENERAL_PURPOSE_SSD"
-              "ebs_volume_count": 3
-              "ebs_volume_size": 100
-            node_type_id: ${var.NODE_TYPE_ID_APP_LAUNCH_MONETA_VALIDATION_CLUSTER}
-            driver_node_type_id: ${var.DRIVER_NODE_TYPE_ID_APP_LAUNCH_MONETA_VALIDATION_CLUSTER}
-            custom_tags:
-              "bamazon:team": "eds_data_science"
-              "bamazon:app": "engds"
-              "bamazon:env": "prod"
-            cluster_log_conf:
-              s3:
-                destination: s3://dbxoverwatch-databricks-cluster-logs-prod/logs
-                region: us-east-1
-                enable_encryption: true
-                canned_acl: bucket-owner-full-control
-            spark_env_vars:
-              "PYSPARK_PYTHON": "/databricks/python3/bin/python3"
-            enable_elastic_disk: false
-            policy_id: 9C60384B6B001C48
-            data_security_mode: LEGACY_SINGLE_USER_STANDARD
-            runtime_engine: STANDARD
-            autoscale:
-              min_workers: 15
-              max_workers: 20
-
-        - job_cluster_key: App_Launch_DLQ_Validation_cluster_${bundle.target}
-          new_cluster:
-            spark_version: 12.2.x-scala2.12
-            spark_conf:
-              "spark.hadoop.fs.s3a.canned.acl": "BucketOwnerFullControl"
-              "spark.hadoop.fs.s3a.stsAssumeRole.arn": "arn:aws:iam::141988508569:role/bamazon-teamengds"
-              "spark.databricks.hive.metastore.glueCatalog.enabled": "true"
-              "hive.metastore.glue.catalogid": "141988508569"
-              "spark.hadoop.fs.s3a.credentialsType": "AssumeRole"
-              "spark.hadoop.fs.s3a.acl.default": "BucketOwnerFullControl"
-            aws_attributes:
-              "first_on_demand": 1
-              "availability": "SPOT_WITH_FALLBACK"
-              "zone_id": "auto"
-              "instance_profile_arn": "arn:aws:iam::199554792156:instance-profile/dataeng-eds_data_science-prod-profile"
-              "spot_bid_price_percent": 100
-              "ebs_volume_type": "GENERAL_PURPOSE_SSD"
-              "ebs_volume_count": 1
-              "ebs_volume_size": 100
-            node_type_id: ${var.NODE_TYPE_ID_APP_LAUNCH_DLQ_VALIDATION_CLUSTER}
-            driver_node_type_id: ${var.DRIVER_NODE_TYPE_ID_APP_LAUNCH_DLQ_VALIDATION_CLUSTER}
-            custom_tags:
-              "bamazon:team": "eds_data_science"
-              "bamazon:app": "engds"
-              "bamazon:env": "prod"
-            cluster_log_conf:
-              s3:
-                destination: s3://dbxoverwatch-databricks-cluster-logs-prod/logs
-                region: us-east-1
-                enable_encryption: true
-                canned_acl: bucket-owner-full-control
-            spark_env_vars:
-              "PYSPARK_PYTHON": "/databricks/python3/bin/python3"
-            enable_elastic_disk: false
-            policy_id: 9C60384B6B001C48
-            data_security_mode: NONE
-            runtime_engine: STANDARD
-            autoscale:
-              min_workers: 2
-              max_workers: 10
-
-        - job_cluster_key: App_Launch_Prediction_Pipeline_Cluster_${bundle.target}
-          new_cluster:
-            spark_version: 12.2.x-gpu-ml-scala2.12
-            spark_conf:
-              "spark.hadoop.fs.s3a.canned.acl": "BucketOwnerFullControl"
-              "spark.hadoop.fs.s3a.stsAssumeRole.arn": "arn:aws:iam::141988508569:role/bamazon-teamengds"
-              "spark.databricks.hive.metastore.glueCatalog.enabled": "true"
-              "hive.metastore.glue.catalogid": "141988508569"
-              "spark.hadoop.fs.s3a.credentialsType": "AssumeRole"
-              "spark.hadoop.fs.s3a.acl.default": "BucketOwnerFullControl"
-            aws_attributes:
-              "first_on_demand": 1
-              "availability": "SPOT_WITH_FALLBACK"
-              "zone_id": "auto"
-              "instance_profile_arn": "arn:aws:iam::199554792156:instance-profile/dataeng-eds_data_science-prod-profile"
-              "spot_bid_price_percent": 100
-              "ebs_volume_type": "GENERAL_PURPOSE_SSD"
-              "ebs_volume_count": 1
-              "ebs_volume_size": 100
-            node_type_id: ${var.NODE_TYPE_ID_APP_LAUNCH_PREDICTION_PIPELINE_CLUSTER}
-            driver_node_type_id: ${var.DRIVER_NODE_TYPE_ID_APP_LAUNCH_PREDICTION_PIPELINE_CLUSTER}
-            custom_tags:
-              "bamazon:team": "eds_data_science"
-              "bamazon:app": "engds"
-              "bamazon:env": "prod"
-            cluster_log_conf:
-              s3:
-                destination: s3://dbxoverwatch-databricks-cluster-logs-prod/logs
-                region: us-east-1
-                enable_encryption: true
-                canned_acl: bucket-owner-full-control
-            enable_elastic_disk: false
-            policy_id: 9C60384B6B001C48
-            data_security_mode: NONE
-            runtime_engine: STANDARD
-            autoscale:
-              min_workers: 6
-              max_workers: 10
-
-      tasks:
-        - task_key: App_Launch_DLQ_Validation
-          notebook_task:
-            notebook_path: QoE_Prod_Notebooks/AppLaunch/applaunch_dlq_benchmark
-            base_parameters:
-              "dataset__applaunch_dlq_benchmark": "applaunch"
-            source: GIT
-          job_cluster_key: App_Launch_DLQ_Validation_cluster_${bundle.target}
-          libraries:
-            - pypi:
-                package: jarvis>=2.0.0
-                repo: https://artifactory.us-east-1.bamgrid.net/api/pypi/eds-pypi/simple
-            - pypi:
-                package: hydroman>=2.0.0
-                repo: https://artifactory.us-east-1.bamgrid.net/api/pypi/eds-pypi/simple
-          max_retries: 2
-          min_retry_interval_millis: 300000
-
-        - task_key: App_Launch_Feature_Engineering
-          notebook_task:
-            notebook_path: App_Launch_Prod_Notebooks/App_Launch_Feature_Engineering
-            base_parameters:
-              "supported_platforms_override__App_Launch_Feature_Engineering": "m5,bbd,roku,android,apple"
-              "override_data_check__App_Launch_Feature_Engineering": "True"
-              "mode__App_Launch_Feature_Engineering": "run"
-              "date": "default"
-              "n_timesteps__App_Launch_Feature_Engineering": "12"
-              "write_output__App_Launch_Feature_Engineering": "True"
-            source: GIT
-          job_cluster_key: App_Launch_Feature_Engineering_cluster_${bundle.target}
-          libraries:
-            - pypi:
-                package: eds-featurization
-                repo: https://artifactory.us-east-1.bamgrid.net/api/pypi/eds-pypi/simple
-            - pypi:
-                package: eds-utils
-                repo: https://artifactory.us-east-1.bamgrid.net/api/pypi/eds-pypi/simple
-       
-        - task_key: App_Launch_Moneta_Validation
-          notebook_task:
-            notebook_path: QoE_Data_Hygiene_Prod/moneta_scoring_prod_v2.0
-            base_parameters:
-              "event__moneta_scoring_prod_v2.0": "applaunch"
-              "error_bypass__moneta_scoring_prod_v2.0": "false"
-              "reduce_columns__moneta_scoring_prod_v2.0": "false"
-              "default_schema_version__moneta_scoring_prod_v2.0": "1.0.0"
-              "date": ""
-              "run_type__moneta_scoring_prod_v2.0": "email_report"
-              "mode__moneta_scoring_prod_v2.0": "prod"
-              "sample_fraction__moneta_scoring_prod_v2.0": ""
-            source: GIT
-          job_cluster_key: App_Launch_Moneta_Validation_cluster_${bundle.target}
-          libraries:
-            - pypi:
-                package: jarvis
-                repo: https://artifactory.us-east-1.bamgrid.net/api/pypi/eds-pypi/simple
-            - pypi:
-                package: eds-utils
-                repo: https://artifactory.us-east-1.bamgrid.net/api/pypi/eds-pypi/simple
-            - pypi:
-                package: hydroman>=2.0.0
-                repo: https://artifactory.us-east-1.bamgrid.net/api/pypi/eds-pypi/simple
-          max_retries: 3
-          min_retry_interval_millis: 360000
-
-        - task_key: App_Launch_Write_Moneta_Benchmark_Scores_S3
-          depends_on:
-            - task_key: App_Launch_Moneta_Validation
-          notebook_task:
-            notebook_path: Hydroman_Notebooks/Write_Benchmark_Scores_S3
-            base_parameters:
-              "filter_major_app__Write_Benchmark_Scores_S3": "false"
-              "benchmark_type__Write_Benchmark_Scores_S3": "moneta"
-              "skip_benchmarks__Write_Benchmark_Scores_S3": "false"
-              "date": ""
-              dataset__Write_Benchmark_Scores_S3: applaunch
-            source: GIT
-          job_cluster_key: App_Launch_Moneta_Validation_cluster_${bundle.target}
-          libraries:
-            - pypi:
-                package: jarvis
-                repo: https://artifactory.us-east-1.bamgrid.net/api/pypi/eds-pypi/simple
-            - pypi:
-                package: eds-utils
-                repo: https://artifactory.us-east-1.bamgrid.net/api/pypi/eds-pypi/simple
-            - pypi:
-                package: hydroman
-                repo: https://artifactory.us-east-1.bamgrid.net/api/pypi/eds-pypi/simple
-          max_retries: 3
-          min_retry_interval_millis: 360000
-
-        - task_key: App_Launch_Write_Moneta_Agg_To_MySQL
-          depends_on:
-            - task_key: App_Launch_Write_Moneta_Benchmark_Scores_S3
-          notebook_task:
-            notebook_path: QoE_Data_Hygiene_Prod/write_all_aggregate_benchmark_scores_mysql
-            base_parameters:
-              "date": ""
-              "score_type__write_all_aggregate_benchmark_scores_mysql": "applaunchMoneta"
-            source: GIT
-          job_cluster_key: App_Launch_Moneta_Validation_cluster_${bundle.target}
-          libraries:
-            - pypi:
-                package: eds-utils
-                repo: https://artifactory.us-east-1.bamgrid.net/api/pypi/eds-pypi/simple
-            - pypi:
-                package: hydroman
-                repo: https://artifactory.us-east-1.bamgrid.net/api/pypi/eds-pypi/simple
-          max_retries: 3
-          min_retry_interval_millis: 360000
-      
-        - task_key: App_Launch_Prediction_Pipeline
-          depends_on:
-            - task_key: App_Launch_Feature_Engineering
-          notebook_task:
-            notebook_path: App_Launch_Prod_Notebooks/App_Launch_Batch_Prediction
-            base_parameters:
-              "write_predictions__App_Launch_Batch_Prediction": "True"
-              "override_data_check__App_Launch_Batch_Prediction": "True"
-              "date": "default"
-              "model_version__App_Launch_Batch_Prediction": ""
-              "supported_platforms_override__App_Launch_Batch_Prediction": "m5,bbd,roku,android,apple"
-              "mode__App_Launch_Batch_Prediction": "run"
-            source: GIT
-          job_cluster_key: App_Launch_Prediction_Pipeline_Cluster_${bundle.target}
-          libraries:
-            - pypi:
-                package: eds-featurization
-                repo: https://artifactory.us-east-1.bamgrid.net/api/pypi/eds-pypi/simple
-            - pypi:
-                package: eds-utils
-                repo: https://artifactory.us-east-1.bamgrid.net/api/pypi/eds-pypi/simple
-            - pypi:
-                package: mlflow
-                repo: https://artifactory.us-east-1.bamgrid.net/api/pypi/eds-pypi/simple
-            - pypi:
-                package: tensorflow
-                repo: https://artifactory.us-east-1.bamgrid.net/api/pypi/eds-pypi/simple
-    
-        - task_key: Agg_ML_Email_Metrics
-          depends_on:
-            - task_key: App_Launch_Prediction_Pipeline
-          notebook_task:
-            notebook_path: App_Launch_Prod_Notebooks/App_Launch_ML_Email_Metrics_Agg
-            base_parameters:
-              "date": "default"
-              "override_data_check__App_Launch_ML_Email_Metrics_Agg": "True"
-              "write_metrics__App_Launch_ML_Email_Metrics_Agg": "True"
-              "mode__App_Launch_ML_Email_Metrics_Agg": "run"
-            source: GIT
-          job_cluster_key: Agg_ML_Email_Metrics_cluster_${bundle.target}
-          libraries:
-            - pypi:
-                package: jarvis
-                repo: https://artifactory.us-east-1.bamgrid.net/api/pypi/eds-pypi/simple
-            - pypi:
-                package: eds-utils
-                repo: https://artifactory.us-east-1.bamgrid.net/api/pypi/eds-pypi/simple
-      
-        - task_key: Rank_Top_Seq_Predictions
-          depends_on:
-            - task_key: App_Launch_Prediction_Pipeline
-          notebook_task:
-            notebook_path: App_Launch_Prod_Notebooks/App_Launch_Top_Sequences
-            base_parameters:
-              "supported_platforms_override__App_Launch_Top_Sequences": "m5,bbd,roku,android,apple"
-              "override_data_check__App_Launch_Top_Sequences": "False"
-              "write_top_anomalies__App_Launch_Top_Sequences": "True"
-              "date": "default"
-              "write_top_valid_seq__App_Launch_Top_Sequences": "True"
-            source: GIT
-          job_cluster_key: Agg_ML_Email_Metrics_cluster_${bundle.target}
-          libraries:
-            - pypi:
-                package: jarvis>=2.0.0
-                repo: https://artifactory.us-east-1.bamgrid.net/api/pypi/eds-pypi/simple
-            - pypi:
-                package: eds-utils
-                repo: https://artifactory.us-east-1.bamgrid.net/api/pypi/eds-pypi/simple
+                min_workers: 1
+                max_workers: 2
