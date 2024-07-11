@@ -93,7 +93,7 @@ targets:
       state_path: /Users/${workspace.current_user.userName}/asset_bundles/${bundle.name}/${bundle.target}/state
     resources:
       jobs:
-        hjob_Pipeline-job:
+        hb_Pipeline-job:
           run_as:
             # This runs as kozaktux@gmail.com in production. We could also use a service principal here
             # using service_principal_name (see https://docs.databricks.com/dev-tools/bundles/permissions.html).
