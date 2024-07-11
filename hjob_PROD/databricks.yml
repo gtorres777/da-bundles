@@ -1,0 +1,110 @@
+# This is a Databricks asset bundle definition for dab_project.
+# See https://docs.databricks.com/dev-tools/bundles/index.html for documentation.
+bundle:
+  name: hjob_PROD
+
+include:
+  - resources/*.yml
+
+
+variables:
+  NODE_TYPE_ID:
+  min_workers:
+  max_workers:
+  S3_PATH:
+    description: S3 bucket name for dev or prod engds
+
+  DB_URL:
+    description: MySQL database name for dev or prod
+
+  OPERATION_MODE:
+    description: Used to distinguish between dev and prod, to enable test/debugging messaging and prevent emails and other messaging from being sent
+
+  DB_SECRETS_SCOPE:
+    description: Used to get secret to connect to MySQL database
+
+  S3_READ_PREFIX:
+    description: Used by scripts to identify where the delta/parquet files should be read from
+
+  S3_WRITE_PREFIX:
+    description: Used by scripts to identify where the delta/parquet files should be written from
+
+targets:
+  # The 'dev' target, for development purposes. This target is the default.
+  DEV:
+  #   # We use 'mode: development' to indicate this is a personal development copy:
+  #   # - Deployed resources get prefixed with '[dev my_user_name]'
+  #   # - Any job schedules and triggers are paused by default
+  #   # - The 'development' mode is used for Delta Live Tables pipelines
+  #   mode: development
+  #   default: true
+  #   workspace:
+  #     host: https://dbc-de53f604-07cf.cloud.databricks.com
+  #
+    workspace:
+      host: https://dbc-98cbe0e7-2417.cloud.databricks.com
+      # We only have a single deployment copy for production, so we use a shared path.
+      auth_type: pat
+      root_path: /Users/${workspace.current_user.userName}/asset_bundles/${bundle.name}/${bundle.target}
+      # root_path: /Shared/.bundle/prod/${bundle.name}
+      artifact_path: /Users/${workspace.current_user.userName}/asset_bundles/${bundle.name}/${bundle.target}/artifacts
+      file_path: /Users/${workspace.current_user.userName}/asset_bundles/${bundle.name}/${bundle.target}/files
+      state_path: /Users/${workspace.current_user.userName}/asset_bundles/${bundle.name}/${bundle.target}/state
+
+    resources:
+      jobs:
+        hjob_Pipeline-job:
+          run_as:
+            # This runs as kozaktux@gmail.com in production. We could also use a service principal here
+            # using service_principal_name (see https://docs.databricks.com/dev-tools/bundles/permissions.html).
+            user_name: kozaktux@gmail.com
+          # email_notifications:
+          #   on_failure:
+          #     - kozaktux@gmail.com
+          git_source:
+            git_url: https://github.com/gtorres777/snote
+            git_provider: github
+            git_branch: dev
+          tags:
+            job: DEV
+
+
+  ## Optionally, there could be a 'staging' target here.
+  ## (See Databricks docs on CI/CD at https://docs.databricks.com/dev-tools/bundles/index.html.)
+  #
+  # staging:
+  #   workspace:
+  #     host: https://dbc-de53f604-07cf.cloud.databricks.com
+
+  # The 'prod' target, used for production deployment.
+  PROD:
+    # We use 'mode: production' to indicate this is a production deployment.
+    # Doing so enables strict verification of the settings below.
+    # mode: production
+    # default: true
+    workspace:
+      host: https://dbc-98cbe0e7-2417.cloud.databricks.com
+      # We only have a single deployment copy for production, so we use a shared path.
+      auth_type: pat
+      root_path: /Users/${workspace.current_user.userName}/asset_bundles/${bundle.name}/${bundle.target}
+      # root_path: /Shared/.bundle/prod/${bundle.name}
+      artifact_path: /Users/${workspace.current_user.userName}/asset_bundles/${bundle.name}/${bundle.target}/artifacts
+      file_path: /Users/${workspace.current_user.userName}/asset_bundles/${bundle.name}/${bundle.target}/files
+      state_path: /Users/${workspace.current_user.userName}/asset_bundles/${bundle.name}/${bundle.target}/state
+    resources:
+      jobs:
+        hjob_Pipeline-job:
+          run_as:
+            # This runs as kozaktux@gmail.com in production. We could also use a service principal here
+            # using service_principal_name (see https://docs.databricks.com/dev-tools/bundles/permissions.html).
+            user_name: kozaktux@gmail.com
+          # email_notifications:
+          #   on_failure:
+          #     - kozaktux@gmail.com
+          git_source:
+            git_url: https://github.com/gtorres777/snote
+            git_provider: github
+            git_branch: master
+          tags:
+            job: PROD
+    

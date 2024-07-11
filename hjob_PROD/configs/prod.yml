@@ -1,0 +1,10 @@
+NODE_TYPE_ID=m4.large
+min_workers=5
+max_workers=6
+S3_PATH=s3://prod-bucket/data
+DB_URL=jdbc:mysql://prod-db-host:3306/db
+OPERATION_MODE=prod
+DB_SECRETS_SCOPE=aws ssm getparameter prod xd
+S3_READ_PREFIX=
+S3_WRITE_PREFIX=
+
