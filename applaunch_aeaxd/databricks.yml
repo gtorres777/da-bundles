@@ -42,7 +42,7 @@ targets:
   #     host: https://dbc-de53f604-07cf.cloud.databricks.com
   #
     workspace:
-      host: https://dbc-de53f604-07cf.cloud.databricks.com
+      host: https://dbc-98cbe0e7-2417.cloud.databricks.com
       # We only have a single deployment copy for production, so we use a shared path.
       auth_type: pat
       root_path: /Users/${workspace.current_user.userName}/asset_bundles/${bundle.name}/${bundle.target}
@@ -83,7 +83,7 @@ targets:
     # mode: production
     # default: true
     workspace:
-      host: https://dbc-de53f604-07cf.cloud.databricks.com
+      host: https://dbc-98cbe0e7-2417.cloud.databricks.com
       # We only have a single deployment copy for production, so we use a shared path.
       auth_type: pat
       root_path: /Users/${workspace.current_user.userName}/asset_bundles/${bundle.name}/${bundle.target}
